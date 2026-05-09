@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rookie — 7-Adam-15 Tactical Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #080b12;
+            --surface: #0d1120;
+            --surface2: #111827;
+            --border: rgba(255,255,255,0.07);
+            --border-hover: rgba(59,130,246,0.4);
+            --accent: #3b82f6;
+            --accent-dim: rgba(59,130,246,0.15);
+            --accent-glow: rgba(59,130,246,0.25);
+            --text: #f1f5f9;
+            --muted: #64748b;
+            --muted2: #94a3b8;
+            --badge: #1e3a5f;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── Background ── */
+        .bg-layer {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 60% at 60% -10%, rgba(29,78,216,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 10% 80%, rgba(15,23,42,0.9) 0%, transparent 60%),
+                var(--bg);
+        }
+
+        /* Subtle noise grain */
+        .bg-layer::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ── Layout ── */
+        .wrap { max-width: 1440px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+        /* ── Nav ── */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            padding: 1.25rem 0;
+            background: rgba(8,11,18,0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1440px; margin: 0 auto; padding: 0 2rem;
+        }
+
+        .brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+
+        .brand-icon {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 20px rgba(59,130,246,0.35);
+            flex-shrink: 0;
+        }
+
+        .brand-text h1 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+            letter-spacing: 0.08em;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .brand-text p {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-status {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            background: var(--surface);
+        }
+
+        .pulse-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 0 rgba(34,197,94,0.5);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+            100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+        }
+
+        .nav-status span { font-size: 0.7rem; font-weight: 600; color: #22c55e; letter-spacing: 0.12em; text-transform: uppercase; }
+
+        /* ── Hero Info Bar ── */
+        .hero-bar {
+            padding: 2.5rem 0 2rem;
+            display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+        }
+
+        .hero-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.3rem 0.85rem;
+            border-radius: 100px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .badge-blue { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(59,130,246,0.25); }
+        .badge-slate { background: rgba(255,255,255,0.05); color: var(--muted2); border: 1px solid var(--border); }
+
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.1;
+            margin-top: 0.5rem;
+        }
+
+        /* ── Main Grid ── */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 1.75rem;
+            padding-bottom: 4rem;
+        }
+
+        @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
+
+        /* ── Player ── */
+        .player-wrap {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid var(--border);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.03),
+                0 25px 80px -20px rgba(0,0,0,0.8),
+                0 0 60px -20px rgba(59,130,246,0.15);
+            position: relative;
+        }
+
+        .player-wrap::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent 90%, rgba(0,0,0,0.5));
+            pointer-events: none; z-index: 5;
+        }
+
+        .video-ratio {
+            position: relative; width: 100%;
+            padding-bottom: 56.25%;
+        }
+
+        .video-ratio iframe {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%; border: none;
+        }
+
+        /* ── Info Card ── */
+        .info-card {
+            margin-top: 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            padding: 1.75rem 2rem;
+        }
+
+        .info-card-row {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-tag {
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .divider-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); }
+
+        .ep-now { font-size: 0.8rem; color: var(--muted2); font-weight: 500; }
+
+        .ep-title-large {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.6rem;
+        }
+
+        .ep-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+        /* ── Sidebar ── */
+        .sidebar-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar-label {
+            font-size: 0.63rem; font-weight: 700;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.85rem;
+            display: block;
+        }
+
+        /* ── Season Select ── */
+        .season-select-wrap { position: relative; margin-bottom: 1.5rem; }
+
+        .season-select-wrap select {
+            width: 100%;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 0.85rem 2.5rem 0.85rem 1.1rem;
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .season-select-wrap select:hover,
+        .season-select-wrap select:focus {
+            border-color: var(--border-hover);
+        }
+
+        .season-select-wrap .chevron {
+            position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+            color: var(--muted); pointer-events: none; font-size: 0.75rem;
+        }
+
+        /* ── Episode List ── */
+        .ep-list {
+            max-height: 560px;
+            overflow-y: auto;
+            display: flex; flex-direction: column; gap: 3px;
+        }
+
+        .ep-list::-webkit-scrollbar { width: 4px; }
+        .ep-list::-webkit-scrollbar-track { background: transparent; }
+        .ep-list::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.25); border-radius: 10px; }
+
+        .ep-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.85rem 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.18s ease;
+            background: transparent;
+        }
+
+        .ep-item:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border);
+        }
+
+        .ep-item.active {
+            background: var(--accent-dim);
+            border-color: rgba(59,130,246,0.3);
+        }
+
+        .ep-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--muted);
+            min-width: 28px;
+            line-height: 1;
+        }
+
+        .ep-item.active .ep-num { color: var(--accent); }
+
+        .ep-label {
+            flex: 1;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted2);
+            line-height: 1.3;
+        }
+
+        .ep-item.active .ep-label { color: var(--text); font-weight: 600; }
+
+        .ep-play-icon {
+            font-size: 0.55rem;
+            color: var(--muted);
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .ep-item:hover .ep-play-icon { opacity: 0.6; }
+        .ep-item.active .ep-play-icon { opacity: 1; color: var(--accent); }
+
+        /* ── Footer Strip ── */
+        .footer-strip {
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 0;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .footer-strip p { font-size: 0.72rem; color: var(--muted); }
+
+        /* ── Fade In ── */
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-up { animation: fade-up 0.55s ease both; }
+        .fade-up-1 { animation-delay: 0.05s; }
+        .fade-up-2 { animation-delay: 0.15s; }
+        .fade-up-3 { animation-delay: 0.25s; }
+
+        /* ── Loading Skeleton ── */
+        @keyframes shimmer {
+            0% { background-position: -400px 0; }
+            100% { background-position: 400px 0; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+            background-size: 400px 100%;
+            animation: shimmer 1.6s infinite;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+
+<!-- Nav -->
+<nav>
+    <div class="nav-inner">
+        <a class="brand" href="#">
+            <div class="brand-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="brand-text">
+                <h1>THE ROOKIE</h1>
+                <p>7-Adam-15 Tactical Hub</p>
+            </div>
+        </a>
+        <div class="nav-status">
+            <div class="pulse-dot"></div>
+            <span>Live</span>
+        </div>
+    </div>
+</nav>
+
+<!-- Content -->
+<div class="wrap">
+
+    <!-- Hero Bar -->
+    <div class="hero-bar fade-up">
+        <div>
+            <div class="hero-meta">
+                <span class="badge badge-blue"><i class="fa-solid fa-circle-play" style="font-size:0.6rem"></i> Streaming</span>
+                <span class="badge badge-slate">2018 — Present</span>
+                <span class="badge badge-slate">ABC Network</span>
+            </div>
+            <h2 class="hero-title">Patrol Log — Episode Guide</h2>
+        </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+
+        <!-- Left: Player + Info -->
+        <div class="fade-up fade-up-1">
+            <div class="player-wrap">
+                <div class="video-ratio">
+                    <iframe id="mainPlayer"
+                        src="https://vidsrc.me/embed/tv?imdb=tt7587890&season=1&episode=1"
+                        allowfullscreen
+                        referrerpolicy="origin"
+                        title="Video Player">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-row">
+                    <span class="info-tag">Now Playing</span>
+                    <div class="divider-dot"></div>
+                    <span id="statusLabel" class="ep-now">Season 1 · Episode 1</span>
+                </div>
+                <div id="epHeading" class="ep-title-large">Pilot</div>
+                <p class="ep-desc">Synced with IMDb database. Use your browser extension to pop this into Picture-in-Picture while you browse.</p>
+            </div>
+        </div>
+
+        <!-- Right: Sidebar -->
+        <div class="fade-up fade-up-2">
+            <div class="sidebar-card">
+                <span class="sidebar-label">Season</span>
+                <div class="season-select-wrap">
+                    <select id="seasonSelect" onchange="initSeason()">
+                        <option value="1">Season 01</option>
+                        <option value="2">Season 02</option>
+                        <option value="3">Season 03</option>
+                        <option value="4">Season 04</option>
+                        <option value="5">Season 05</option>
+                        <option value="6">Season 06</option>
+                        <option value="7">Season 07</option>
+                        <option value="8">Season 08</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down chevron"></i>
+                </div>
+
+                <span class="sidebar-label">Episodes</span>
+                <div id="epContainer" class="ep-list"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-strip fade-up fade-up-3">
+        <p>7-Adam-15 Tactical Hub · Fan Project</p>
+        <p>Use a browser extension for Picture-in-Picture</p>
+    </div>
+</div>
+
+<script>
+    const IMDB_ID = "tt7587890";
+    const EP_COUNTS = { 1:20, 2:20, 3:14, 4:22, 5:22, 6:10, 7:18, 8:18 };
+    const EP_TITLES = {
+        1: { 1:"Pilot", 2:"Crash and Burn", 3:"The Good, The Bad and The Ugly", 4:"The Switch", 5:"The Roundup", 6:"The Hawke", 7:"The Ride Along", 8:"Crossfire", 9:"Standoff", 10:"Flesh and Blood", 11:"Redline", 12:"Under the Gun", 13:"Caught Stealing", 14:"Plain Clothes Day", 15:"Manhunt", 16:"Greenlight", 17:"The Shake Up", 18:"Homefront", 19:"The Rook", 20:"Free Fall" }
+    };
+
+    let curS = 1, curE = 1;
+
+    function getTitle(s, e) {
+        if (EP_TITLES[s] && EP_TITLES[s][e]) return EP_TITLES[s][e];
+        return `Episode ${e}`;
+    }
+
+    function initSeason() {
+        curS = parseInt(document.getElementById('seasonSelect').value);
+        const container = document.getElementById('epContainer');
+        container.innerHTML = '';
+
+        const count = EP_COUNTS[curS] || 10;
+        for (let i = 1; i <= count; i++) {
+            const isActive = (curS === parseInt(document.getElementById('seasonSelect').value) && curE === i);
+            const div = document.createElement('div');
+            div.className = `ep-item${isActive ? ' active' : ''}`;
+            div.setAttribute('data-ep', i);
+            div.onclick = () => play(i);
+            div.innerHTML = `
+                <span class="ep-num">${String(i).padStart(2,'0')}</span>
+                <span class="ep-label">${getTitle(curS, i)}</span>
+                <i class="fa-solid fa-play ep-play-icon"></i>
+            `;
+            container.appendChild(div);
+        }
+    }
+
+    function play(e) {
+        curE = e;
+        const player = document.getElementById('mainPlayer');
+        player.src = `https://vidsrc.me/embed/tv?imdb=${IMDB_ID}&season=${curS}&episode=${e}`;
+
+        document.getElementById('statusLabel').innerText = `Season ${curS} · Episode ${curE}`;
+        document.getElementById('epHeading').innerText = getTitle(curS, curE);
+
+        // Update active state without re-rendering
+        document.querySelectorAll('.ep-item').forEach(el => {
+            const isActive = parseInt(el.getAttribute('data-ep')) === e;
+            el.classList.toggle('active', isActive);
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initSeason;
+</script>
+</body>
+</html>
