@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Rookie — 7-Adam-15 Tactical Hub</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,11 +17,13 @@
             --border-hover: rgba(59,130,246,0.4);
             --accent: #3b82f6;
             --accent-dim: rgba(59,130,246,0.15);
-            --accent-glow: rgba(59,130,246,0.25);
+            --accent2: #a855f7;
+            --accent2-dim: rgba(168,85,247,0.12);
             --text: #f1f5f9;
             --muted: #64748b;
             --muted2: #94a3b8;
-            --badge: #1e3a5f;
+            --body-font: 'DM Sans', sans-serif;
+            --display-font: 'Syne', sans-serif;
         }
 
         html { scroll-behavior: smooth; }
@@ -29,12 +31,11 @@
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: 'DM Sans', sans-serif;
+            font-family: var(--body-font);
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ── Background ── */
         .bg-layer {
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background:
@@ -42,19 +43,15 @@
                 radial-gradient(ellipse 50% 40% at 10% 80%, rgba(15,23,42,0.9) 0%, transparent 60%),
                 var(--bg);
         }
-
-        /* Subtle noise grain */
         .bg-layer::after {
-            content: '';
-            position: absolute; inset: 0;
+            content: ''; position: absolute; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
             opacity: 0.4;
         }
 
-        /* ── Layout ── */
         .wrap { max-width: 1440px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
 
-        /* ── Nav ── */
+        /* NAV */
         nav {
             position: sticky; top: 0; z-index: 100;
             padding: 1.25rem 0;
@@ -62,14 +59,11 @@
             backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
         }
-
         .nav-inner {
             display: flex; align-items: center; justify-content: space-between;
             max-width: 1440px; margin: 0 auto; padding: 0 2rem;
         }
-
         .brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
-
         .brand-icon {
             width: 42px; height: 42px;
             background: linear-gradient(135deg, #1d4ed8, #3b82f6);
@@ -79,315 +73,325 @@
             box-shadow: 0 4px 20px rgba(59,130,246,0.35);
             flex-shrink: 0;
         }
-
         .brand-text h1 {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.35rem;
-            letter-spacing: 0.08em;
-            color: var(--text);
-            line-height: 1;
+            font-family: var(--display-font);
+            font-weight: 800; font-size: 1.35rem;
+            letter-spacing: 0.08em; color: var(--text); line-height: 1;
         }
-
         .brand-text p {
-            font-size: 0.6rem;
-            font-weight: 600;
-            letter-spacing: 0.25em;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-top: 2px;
+            font-size: 0.6rem; font-weight: 600;
+            letter-spacing: 0.25em; color: var(--accent);
+            text-transform: uppercase; margin-top: 2px;
         }
-
+        .nav-right { display: flex; align-items: center; gap: 0.75rem; }
         .nav-status {
             display: flex; align-items: center; gap: 0.6rem;
             padding: 0.5rem 1.1rem;
-            border: 1px solid var(--border);
-            border-radius: 100px;
+            border: 1px solid var(--border); border-radius: 100px;
             background: var(--surface);
         }
-
         .pulse-dot {
-            width: 7px; height: 7px; border-radius: 50%;
-            background: #22c55e;
-            box-shadow: 0 0 0 0 rgba(34,197,94,0.5);
+            width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
             animation: pulse-ring 2s ease-out infinite;
         }
-
         @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-            70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+            0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+            70%  { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
             100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
         }
-
         .nav-status span { font-size: 0.7rem; font-weight: 600; color: #22c55e; letter-spacing: 0.12em; text-transform: uppercase; }
 
-        /* ── Hero Info Bar ── */
+        /* SETTINGS BUTTON */
+        .settings-btn {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid var(--border); border-radius: 100px;
+            background: var(--surface); color: var(--muted2);
+            font-family: var(--body-font); font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .settings-btn:hover { border-color: var(--border-hover); color: var(--text); }
+
+        /* SETTINGS PANEL */
+        .settings-overlay {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(8px);
+            display: none; align-items: center; justify-content: center;
+        }
+        .settings-overlay.open { display: flex; }
+        .settings-panel {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1.5rem; padding: 2rem;
+            width: 420px; max-width: 90vw;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            animation: fade-up 0.25s ease both;
+        }
+        .settings-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.75rem;
+        }
+        .settings-title { font-family: var(--display-font); font-size: 1.1rem; font-weight: 800; color: var(--text); }
+        .settings-close {
+            width: 32px; height: 32px; border-radius: 8px;
+            border: 1px solid var(--border); background: transparent;
+            color: var(--muted); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; transition: all 0.15s;
+        }
+        .settings-close:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+        .settings-section-label {
+            font-size: 0.63rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 0.85rem; display: block;
+        }
+        .font-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .font-option {
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--border); border-radius: 0.75rem;
+            background: var(--surface2); cursor: pointer; transition: all 0.18s; text-align: left;
+        }
+        .font-option:hover { border-color: var(--border-hover); }
+        .font-option.selected { border-color: var(--accent); background: var(--accent-dim); }
+        .font-option-name { font-size: 0.8rem; font-weight: 600; color: var(--text); display: block; margin-bottom: 3px; }
+        .font-option-preview { font-size: 0.7rem; color: var(--muted); display: block; line-height: 1.4; }
+
+        /* HERO BAR */
         .hero-bar {
             padding: 2.5rem 0 2rem;
             display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
         }
-
         .hero-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-
         .badge {
             display: inline-flex; align-items: center; gap: 0.4rem;
-            padding: 0.3rem 0.85rem;
-            border-radius: 100px;
-            font-size: 0.68rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            padding: 0.3rem 0.85rem; border-radius: 100px;
+            font-size: 0.68rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
         }
-
         .badge-blue { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(59,130,246,0.25); }
         .badge-slate { background: rgba(255,255,255,0.05); color: var(--muted2); border: 1px solid var(--border); }
-
         .hero-title {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--display-font);
             font-size: clamp(1.6rem, 3vw, 2.4rem);
-            font-weight: 800;
-            color: var(--text);
-            line-height: 1.1;
-            margin-top: 0.5rem;
+            font-weight: 800; color: var(--text); line-height: 1.1; margin-top: 0.5rem;
         }
 
-        /* ── Main Grid ── */
+        /* MAIN GRID */
         .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 1.75rem;
-            padding-bottom: 4rem;
+            display: grid; grid-template-columns: 1fr 360px;
+            gap: 1.75rem; padding-bottom: 2rem;
         }
-
         @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
 
-        /* ── Player ── */
+        /* PLAYERS */
         .player-wrap {
-            border-radius: 1.25rem;
-            overflow: hidden;
-            background: #000;
-            border: 1px solid var(--border);
-            box-shadow:
-                0 0 0 1px rgba(255,255,255,0.03),
-                0 25px 80px -20px rgba(0,0,0,0.8),
-                0 0 60px -20px rgba(59,130,246,0.15);
+            border-radius: 1.25rem; overflow: hidden;
+            background: #000; border: 1px solid var(--border);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 25px 80px -20px rgba(0,0,0,0.8), 0 0 60px -20px rgba(59,130,246,0.15);
             position: relative;
         }
-
-        .player-wrap::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent 90%, rgba(0,0,0,0.5));
-            pointer-events: none; z-index: 5;
+        .player-wrap-2 {
+            border-radius: 1.25rem; overflow: hidden;
+            background: #000; border: 1px solid rgba(168,85,247,0.2);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 25px 80px -20px rgba(0,0,0,0.8), 0 0 60px -20px rgba(168,85,247,0.12);
+            position: relative;
         }
+        .video-ratio { position: relative; width: 100%; padding-bottom: 56.25%; }
+        .video-ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 
-        .video-ratio {
-            position: relative; width: 100%;
-            padding-bottom: 56.25%;
+        /* SERVER HEADER */
+        .server-header {
+            display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;
         }
-
-        .video-ratio iframe {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%; border: none;
+        .server-icon {
+            width: 36px; height: 36px; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; flex-shrink: 0;
         }
-
-        /* ── Info Card ── */
-        .info-card {
-            margin-top: 1.25rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 1.25rem;
-            padding: 1.75rem 2rem;
+        .server-icon-1 { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(59,130,246,0.2); }
+        .server-icon-2 { background: var(--accent2-dim); color: var(--accent2); border: 1px solid rgba(168,85,247,0.2); }
+        .server-name { font-family: var(--display-font); font-weight: 700; font-size: 0.95rem; color: var(--text); line-height: 1; }
+        .server-url { font-size: 0.63rem; color: var(--muted); margin-top: 3px; }
+        .server-badge {
+            margin-left: auto;
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.22rem 0.7rem; border-radius: 100px;
+            font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
         }
+        .server-badge-1 { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(59,130,246,0.25); }
+        .server-badge-2 { background: var(--accent2-dim); color: var(--accent2); border: 1px solid rgba(168,85,247,0.25); }
 
-        .info-card-row {
+        /* DIVIDER */
+        .server-divider {
+            margin: 2.5rem 0 1.75rem;
             display: flex; align-items: center; gap: 1rem;
-            margin-bottom: 1rem;
         }
-
-        .info-tag {
+        .server-divider-line { flex: 1; height: 1px; background: var(--border); }
+        .server-divider-label {
+            display: flex; align-items: center; gap: 0.5rem;
             font-size: 0.65rem; font-weight: 700;
             letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--accent);
+            color: var(--muted); white-space: nowrap;
         }
 
+        /* INFO CARDS */
+        .info-card {
+            margin-top: 1.25rem;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 1.25rem; padding: 1.75rem 2rem;
+        }
+        .info-card-2 {
+            margin-top: 1.25rem;
+            background: var(--surface); border: 1px solid rgba(168,85,247,0.15);
+            border-radius: 1.25rem; padding: 1.75rem 2rem;
+        }
+        .info-card-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .info-tag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+        .info-tag-2 { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); }
         .divider-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); }
-
         .ep-now { font-size: 0.8rem; color: var(--muted2); font-weight: 500; }
-
-        .ep-title-large {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 0.6rem;
-        }
-
+        .ep-title-large { font-family: var(--display-font); font-size: 1.75rem; font-weight: 800; color: var(--text); margin-bottom: 0.6rem; }
         .ep-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
 
-        /* ── Sidebar ── */
+        /* SIDEBAR */
         .sidebar-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            height: fit-content;
-            position: sticky;
-            top: 80px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 1.25rem; padding: 1.5rem;
+            height: fit-content; position: sticky; top: 80px;
         }
-
         .sidebar-label {
             font-size: 0.63rem; font-weight: 700;
             letter-spacing: 0.22em; text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.85rem;
-            display: block;
+            color: var(--muted); margin-bottom: 0.85rem; display: block;
         }
-
-        /* ── Season Select ── */
         .season-select-wrap { position: relative; margin-bottom: 1.5rem; }
-
         .season-select-wrap select {
-            width: 100%;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
+            width: 100%; background: var(--surface2);
+            border: 1px solid var(--border); border-radius: 0.75rem;
             padding: 0.85rem 2.5rem 0.85rem 1.1rem;
-            color: var(--text);
-            font-family: 'Syne', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            outline: none;
-            appearance: none;
-            cursor: pointer;
-            transition: border-color 0.2s;
+            color: var(--text); font-family: var(--display-font);
+            font-weight: 600; font-size: 0.9rem;
+            outline: none; appearance: none; cursor: pointer; transition: border-color 0.2s;
         }
-
         .season-select-wrap select:hover,
-        .season-select-wrap select:focus {
-            border-color: var(--border-hover);
-        }
-
+        .season-select-wrap select:focus { border-color: var(--border-hover); }
         .season-select-wrap .chevron {
             position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
             color: var(--muted); pointer-events: none; font-size: 0.75rem;
         }
-
-        /* ── Episode List ── */
         .ep-list {
-            max-height: 560px;
-            overflow-y: auto;
+            max-height: 520px; overflow-y: auto;
             display: flex; flex-direction: column; gap: 3px;
         }
-
         .ep-list::-webkit-scrollbar { width: 4px; }
         .ep-list::-webkit-scrollbar-track { background: transparent; }
         .ep-list::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.25); border-radius: 10px; }
-
         .ep-item {
             display: flex; align-items: center; gap: 1rem;
-            padding: 0.85rem 1rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: all 0.18s ease;
-            background: transparent;
+            padding: 0.85rem 1rem; border-radius: 0.75rem;
+            cursor: pointer; border: 1px solid transparent; transition: all 0.18s ease;
         }
-
-        .ep-item:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: var(--border);
-        }
-
-        .ep-item.active {
-            background: var(--accent-dim);
-            border-color: rgba(59,130,246,0.3);
-        }
-
-        .ep-num {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: var(--muted);
-            min-width: 28px;
-            line-height: 1;
-        }
-
+        .ep-item:hover { background: rgba(255,255,255,0.04); border-color: var(--border); }
+        .ep-item.active { background: var(--accent-dim); border-color: rgba(59,130,246,0.3); }
+        .ep-num { font-family: var(--display-font); font-size: 0.72rem; font-weight: 800; color: var(--muted); min-width: 28px; line-height: 1; }
         .ep-item.active .ep-num { color: var(--accent); }
-
-        .ep-label {
-            flex: 1;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--muted2);
-            line-height: 1.3;
-        }
-
+        .ep-label { flex: 1; font-size: 0.85rem; font-weight: 500; color: var(--muted2); line-height: 1.3; }
         .ep-item.active .ep-label { color: var(--text); font-weight: 600; }
-
-        .ep-play-icon {
-            font-size: 0.55rem;
-            color: var(--muted);
-            opacity: 0;
-            transition: opacity 0.15s;
-        }
-
+        .ep-play-icon { font-size: 0.55rem; color: var(--muted); opacity: 0; transition: opacity 0.15s; }
         .ep-item:hover .ep-play-icon { opacity: 0.6; }
         .ep-item.active .ep-play-icon { opacity: 1; color: var(--accent); }
 
-        /* ── Footer Strip ── */
+        /* FOOTER */
         .footer-strip {
-            border-top: 1px solid var(--border);
-            padding: 1.5rem 0;
-            display: flex; align-items: center; justify-content: space-between;
+            border-top: 1px solid var(--border); padding: 1.5rem 0;
+            display: flex; align-items: center; justify-content: space-between; margin-top: 2rem;
         }
-
         .footer-strip p { font-size: 0.72rem; color: var(--muted); }
 
-        /* ── Fade In ── */
+        /* ANIMATIONS */
         @keyframes fade-up {
             from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-
         .fade-up { animation: fade-up 0.55s ease both; }
         .fade-up-1 { animation-delay: 0.05s; }
         .fade-up-2 { animation-delay: 0.15s; }
         .fade-up-3 { animation-delay: 0.25s; }
-
-        /* ── Loading Skeleton ── */
-        @keyframes shimmer {
-            0% { background-position: -400px 0; }
-            100% { background-position: 400px 0; }
-        }
-
-        .skeleton {
-            background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
-            background-size: 400px 100%;
-            animation: shimmer 1.6s infinite;
-            border-radius: 4px;
-        }
     </style>
 </head>
 <body>
 
 <div class="bg-layer"></div>
 
+<!-- Settings Overlay -->
+<div class="settings-overlay" id="settingsOverlay" onclick="closeSettings(event)">
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <span class="settings-title">Display Settings</span>
+            <button class="settings-close" onclick="toggleSettings()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <span class="settings-section-label">Body Font</span>
+        <div class="font-grid" id="fontGrid">
+            <button class="font-option selected"
+                data-body="'DM Sans', sans-serif" data-display="'Syne', sans-serif"
+                onclick="setFont(this)">
+                <span class="font-option-name" style="font-family:'DM Sans',sans-serif">DM Sans</span>
+                <span class="font-option-preview" style="font-family:'DM Sans',sans-serif">Clean · Modern</span>
+            </button>
+            <button class="font-option"
+                data-body="'Inter', sans-serif" data-display="'Syne', sans-serif"
+                onclick="setFont(this)">
+                <span class="font-option-name" style="font-family:'Inter',sans-serif">Inter</span>
+                <span class="font-option-preview" style="font-family:'Inter',sans-serif">Neutral · Precise</span>
+            </button>
+            <button class="font-option"
+                data-body="'Space Grotesk', sans-serif" data-display="'Space Grotesk', sans-serif"
+                onclick="setFont(this)">
+                <span class="font-option-name" style="font-family:'Space Grotesk',sans-serif">Space Grotesk</span>
+                <span class="font-option-preview" style="font-family:'Space Grotesk',sans-serif">Techy · Bold</span>
+            </button>
+            <button class="font-option"
+                data-body="'Crimson Pro', serif" data-display="'Playfair Display', serif"
+                onclick="setFont(this)">
+                <span class="font-option-name" style="font-family:'Crimson Pro',serif">Crimson Pro</span>
+                <span class="font-option-preview" style="font-family:'Crimson Pro',serif">Elegant · Editorial</span>
+            </button>
+            <button class="font-option"
+                data-body="'JetBrains Mono', monospace" data-display="'JetBrains Mono', monospace"
+                onclick="setFont(this)">
+                <span class="font-option-name" style="font-family:'JetBrains Mono',monospace">JetBrains Mono</span>
+                <span class="font-option-preview" style="font-family:'JetBrains Mono',monospace">Code · Terminal</span>
+            </button>
+            <button class="font-option"
+                data-body="'Playfair Display', serif" data-display="'Playfair Display', serif"
+                onclick="setFont(this)">
+                <span class="font-option-name" style="font-family:'Playfair Display',serif">Playfair</span>
+                <span class="font-option-preview" style="font-family:'Playfair Display',serif;font-style:italic">Classic · Refined</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- Nav -->
 <nav>
     <div class="nav-inner">
         <a class="brand" href="#">
-            <div class="brand-icon">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
+            <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
             <div class="brand-text">
                 <h1>THE ROOKIE</h1>
                 <p>7-Adam-15 Tactical Hub</p>
             </div>
         </a>
-        <div class="nav-status">
-            <div class="pulse-dot"></div>
-            <span>Live</span>
+        <div class="nav-right">
+            <button class="settings-btn" onclick="toggleSettings()">
+                <i class="fa-solid fa-sliders"></i> Font
+            </button>
+            <div class="nav-status">
+                <div class="pulse-dot"></div>
+                <span>Live</span>
+            </div>
         </div>
     </div>
 </nav>
@@ -410,15 +414,24 @@
     <!-- Main Grid -->
     <div class="main-grid">
 
-        <!-- Left: Player + Info -->
+        <!-- Left Column -->
         <div class="fade-up fade-up-1">
+
+            <!-- SERVER 1 -->
+            <div class="server-header">
+                <div class="server-icon server-icon-1"><i class="fa-solid fa-server"></i></div>
+                <div>
+                    <div class="server-name">Server 1 — VidSrc</div>
+                    <div class="server-url">vidsrc.me</div>
+                </div>
+                <span class="server-badge server-badge-1"><i class="fa-solid fa-signal" style="font-size:0.5rem"></i> Primary</span>
+            </div>
+
             <div class="player-wrap">
                 <div class="video-ratio">
                     <iframe id="mainPlayer"
                         src="https://vidsrc.me/embed/tv?imdb=tt7587890&season=1&episode=1"
-                        allowfullscreen
-                        referrerpolicy="origin"
-                        title="Video Player">
+                        allowfullscreen referrerpolicy="origin" title="Server 1 Player">
                     </iframe>
                 </div>
             </div>
@@ -430,11 +443,50 @@
                     <span id="statusLabel" class="ep-now">Season 1 · Episode 1</span>
                 </div>
                 <div id="epHeading" class="ep-title-large">Pilot</div>
-                <p class="ep-desc">Synced with IMDb database. Use your browser extension to pop this into Picture-in-Picture while you browse.</p>
+                <p class="ep-desc">Primary stream via VidSrc. Use your browser extension to pop this into Picture-in-Picture while you browse.</p>
             </div>
+
+            <!-- DIVIDER -->
+            <div class="server-divider">
+                <div class="server-divider-line"></div>
+                <div class="server-divider-label">
+                    <i class="fa-solid fa-code-branch" style="font-size:0.6rem"></i> Alternate Stream
+                </div>
+                <div class="server-divider-line"></div>
+            </div>
+
+            <!-- SERVER 2 -->
+            <div class="server-header">
+                <div class="server-icon server-icon-2"><i class="fa-solid fa-tower-broadcast"></i></div>
+                <div>
+                    <div class="server-name">Server 2 — MoviesAPI</div>
+                    <div class="server-url">moviesapi.club</div>
+                </div>
+                <span class="server-badge server-badge-2"><i class="fa-solid fa-rotate" style="font-size:0.5rem"></i> Backup</span>
+            </div>
+
+            <div class="player-wrap-2">
+                <div class="video-ratio">
+                    <iframe id="backupPlayer"
+                        src="https://moviesapi.club/tv/79744-1-1"
+                        allowfullscreen referrerpolicy="origin" title="Server 2 Player">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="info-card-2">
+                <div class="info-card-row">
+                    <span class="info-tag-2">Backup Stream</span>
+                    <div class="divider-dot"></div>
+                    <span id="statusLabel2" class="ep-now">Season 1 · Episode 1</span>
+                </div>
+                <div id="epHeading2" class="ep-title-large">Pilot</div>
+                <p class="ep-desc">Alternate stream via MoviesAPI. If Server 1 isn't loading, try this one — both stay in sync with your episode selection.</p>
+            </div>
+
         </div>
 
-        <!-- Right: Sidebar -->
+        <!-- Sidebar -->
         <div class="fade-up fade-up-2">
             <div class="sidebar-card">
                 <span class="sidebar-label">Season</span>
@@ -451,7 +503,6 @@
                     </select>
                     <i class="fa-solid fa-chevron-down chevron"></i>
                 </div>
-
                 <span class="sidebar-label">Episodes</span>
                 <div id="epContainer" class="ep-list"></div>
             </div>
@@ -468,6 +519,7 @@
 
 <script>
     const IMDB_ID = "tt7587890";
+    const TMDB_ID = "79744"; // The Rookie TMDB ID for moviesapi.club
     const EP_COUNTS = { 1:20, 2:20, 3:14, 4:22, 5:22, 6:10, 7:18, 8:18 };
     const EP_TITLES = {
         1: { 1:"Pilot", 2:"Crash and Burn", 3:"The Good, The Bad and The Ugly", 4:"The Switch", 5:"The Roundup", 6:"The Hawke", 7:"The Ride Along", 8:"Crossfire", 9:"Standoff", 10:"Flesh and Blood", 11:"Redline", 12:"Under the Gun", 13:"Caught Stealing", 14:"Plain Clothes Day", 15:"Manhunt", 16:"Greenlight", 17:"The Shake Up", 18:"Homefront", 19:"The Rook", 20:"Free Fall" }
@@ -484,12 +536,10 @@
         curS = parseInt(document.getElementById('seasonSelect').value);
         const container = document.getElementById('epContainer');
         container.innerHTML = '';
-
         const count = EP_COUNTS[curS] || 10;
         for (let i = 1; i <= count; i++) {
-            const isActive = (curS === parseInt(document.getElementById('seasonSelect').value) && curE === i);
             const div = document.createElement('div');
-            div.className = `ep-item${isActive ? ' active' : ''}`;
+            div.className = `ep-item${curE === i ? ' active' : ''}`;
             div.setAttribute('data-ep', i);
             div.onclick = () => play(i);
             div.innerHTML = `
@@ -503,22 +553,69 @@
 
     function play(e) {
         curE = e;
-        const player = document.getElementById('mainPlayer');
-        player.src = `https://vidsrc.me/embed/tv?imdb=${IMDB_ID}&season=${curS}&episode=${e}`;
 
-        document.getElementById('statusLabel').innerText = `Season ${curS} · Episode ${curE}`;
-        document.getElementById('epHeading').innerText = getTitle(curS, curE);
+        // Server 1 — VidSrc
+        document.getElementById('mainPlayer').src =
+            `https://vidsrc.me/embed/tv?imdb=${IMDB_ID}&season=${curS}&episode=${e}`;
 
-        // Update active state without re-rendering
+        // Server 2 — MoviesAPI: format is /tv/TMDBID-season-episode
+        document.getElementById('backupPlayer').src =
+            `https://moviesapi.club/tv/${TMDB_ID}-${curS}-${e}`;
+
+        const label = `Season ${curS} · Episode ${curE}`;
+        const title = getTitle(curS, curE);
+
+        document.getElementById('statusLabel').innerText = label;
+        document.getElementById('epHeading').innerText = title;
+        document.getElementById('statusLabel2').innerText = label;
+        document.getElementById('epHeading2').innerText = title;
+
         document.querySelectorAll('.ep-item').forEach(el => {
-            const isActive = parseInt(el.getAttribute('data-ep')) === e;
-            el.classList.toggle('active', isActive);
+            el.classList.toggle('active', parseInt(el.getAttribute('data-ep')) === e);
         });
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    window.onload = initSeason;
+    // Font Settings
+    function toggleSettings() {
+        document.getElementById('settingsOverlay').classList.toggle('open');
+    }
+
+    function closeSettings(e) {
+        if (e.target === document.getElementById('settingsOverlay')) toggleSettings();
+    }
+
+    function setFont(btn) {
+        document.querySelectorAll('.font-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const bodyFont = btn.getAttribute('data-body');
+        const displayFont = btn.getAttribute('data-display');
+        document.documentElement.style.setProperty('--body-font', bodyFont);
+        document.documentElement.style.setProperty('--display-font', displayFont);
+        document.body.style.fontFamily = bodyFont;
+        try {
+            localStorage.setItem('rookieBodyFont', bodyFont);
+            localStorage.setItem('rookieDisplayFont', displayFont);
+        } catch(e) {}
+    }
+
+    function loadFont() {
+        try {
+            const savedBody = localStorage.getItem('rookieBodyFont');
+            const savedDisplay = localStorage.getItem('rookieDisplayFont');
+            if (savedBody) {
+                document.documentElement.style.setProperty('--body-font', savedBody);
+                document.documentElement.style.setProperty('--display-font', savedDisplay);
+                document.body.style.fontFamily = savedBody;
+                document.querySelectorAll('.font-option').forEach(btn => {
+                    btn.classList.toggle('selected', btn.getAttribute('data-body') === savedBody);
+                });
+            }
+        } catch(e) {}
+    }
+
+    window.onload = () => { initSeason(); loadFont(); };
 </script>
 </body>
 </html>
